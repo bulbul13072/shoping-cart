@@ -16,26 +16,25 @@
       <div class="container">
          <div class="cart">
             <div class="col-md-12 col-lg-10 mx-auto">
-               <div class="cart-item">
+               <div class="cart-item" id="phoneS">
                   <div class="row">
                      <div class="col-md-7 center-item">
                         <img src="images/product-1.png" alt="">
                         <h5>iPhone 11 128GB Black</h5>
                      </div>
-
-                     <div class="col-md-5 center-item">
+                     <div class="col-md-5 center-item" id="phone-div">
                         <div class="input-group number-spinner">
                            <button class="btn btn-default" id="phone-exclude"><i class="fas fa-minus"></i></button>
                            <input type="text" class="form-control text-center" id="phone-qty" value="1">
                            <button class="btn btn-default" id="phone-include"><i class="fas fa-plus"></i></button>
                         </div>
-                        <h5>$ <span id="phone-price">1219 </span></h5>
-                        <img src="images/remove.png" alt="" class="remove-item">
+                        <h5>$<span id="phone-price">1219</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item" id="remove-phone">
                      </div>
                   </div>
                </div>
 
-               <div class="cart-item">
+               <div class="cart-item" id="caseS">
                   <div class="row">
                      <div class="col-md-7 center-item mx-auto">
                         <img src="images/product-2.png" alt="">
@@ -48,8 +47,8 @@
                            <button class="btn btn-default" id="case-include"><i class="fas fa-plus"></i></button>
 
                         </div>
-                        <h5>$ <span>59</span></h5>
-                        <img src="images/remove.png" alt="" class="remove-item">
+                        <h5>$<span id="case-price">59</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item" id="remove-case">
                      </div>
                   </div>
                </div>
@@ -64,9 +63,9 @@
                      </div>
 
                      <div class="col-md-4 status">
-                        <h5>$ <span id="sub-total">1,278 </span></h5>
+                        <h5>$<span id="sub-total">1278</span></h5>
                         <h5>$0</h5>
-                        <h5>$ <span id="total">1,278</span></h5>
+                        <h5>$<span id="total">1278</span></h5>
                      </div>
                   </div>
                </div>
@@ -78,14 +77,106 @@
       </div>
    </section>
 <script>
+   //Remove phone from card
 const excludePhone = document.getElementById("phone-exclude");
 excludePhone.addEventListener("click", function(){
-   const excludeItem = document.getElementById("phone-qty").value;
-   const valueNewItem = parseFloat(excludeItem);
-   const updateValue = valueNewItem-1;
-   document.getElementById("phone-qty").value =(updateValue);
+   removeButton("phone-qty");
+   validateForm("phone-qty");
 
-});
+   excludePhonePrice("phone-price");
+   excludePhonePrice("sub-total");
+   excludePhonePrice("total");
+
+
+})
+
+//add phone to cart
+const includePhone = document.getElementById("phone-include");
+includePhone.addEventListener("click", function(){
+   addButton("phone-qty");
+   includePhonePrice("phone-price");
+   includePhonePrice("sub-total");
+   includePhonePrice("total");
+
+})
+
+const excludeCase = document.getElementById("case-exclude");
+excludeCase.addEventListener("click", function(){
+   removeButton("case-qty");
+   validateForm("case-qty");
+   excludeCasePrice("case-price");
+   excludeCasePrice("sub-total");
+   excludeCasePrice("total");
+})
+
+const includeCase = document.getElementById("case-include");
+includeCase.addEventListener("click", function(){
+   addButton("case-qty");
+
+   includeCasePrice("case-price");
+   includeCasePrice("sub-total");
+   includeCasePrice("total");
+
+})
+const deletePhone = document.getElementById("remove-phone");
+deletePhone.addEventListener("click", function(){
+   deleteItem("phoneS");
+})
+
+const deleteCase = document.getElementById("remove-case");
+deleteCase.addEventListener("click", function(){
+   deleteItem("caseS");
+})
+
+
+//Functions
+//Form Validation
+function validateForm(id) {
+  const noNegative = document.getElementById(id).value;
+  const convertValue = parseFloat(noNegative);
+  if (convertValue < 1) {
+   document.getElementById(id).value = "1";
+  }
+}
+
+function addButton (id){
+   const addItem = document.getElementById(id).value;
+   const valueNewItem = parseFloat(addItem);
+   document.getElementById(id).value =(valueNewItem+1);
+}
+function removeButton (id){
+   const removeItem = document.getElementById(id).value;
+   const valueNewItem = parseFloat(removeItem);
+   document.getElementById(id).value =(valueNewItem-1);
+}
+
+function includePhonePrice (id){
+   const phonePrice = document.getElementById(id).innerText;
+   const newPhoneTotal = parseFloat(phonePrice);
+   document.getElementById(id).innerText = newPhoneTotal+1219;
+}
+function excludePhonePrice (id){
+   const phonePrice = document.getElementById(id).innerText;
+   const newPhoneTotal = parseFloat(phonePrice);
+   document.getElementById(id).innerText = newPhoneTotal-1219;
+
+}
+function includeCasePrice (id){
+   const phonePrice = document.getElementById(id).innerText;
+   const newPhoneTotal = parseFloat(phonePrice);
+   document.getElementById(id).innerText = newPhoneTotal+59;
+}
+function excludeCasePrice (id){
+   const phonePrice = document.getElementById(id).innerText;
+   const newPhoneTotal = parseFloat(phonePrice);
+   document.getElementById(id).innerText = newPhoneTotal-59;
+}
+function deleteItem(id){
+  const displayNone = document.getElementById(id);
+   displayNone.style.display = "none";
+}
+
+
 </script>
 </body>
 
